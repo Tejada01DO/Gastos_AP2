@@ -10,15 +10,15 @@ import retrofit2.http.Headers
 import retrofit2.http.Query
 
 interface GastosApi {
-    @GET("api/gastos")
+    @GET("api/Gastos")
     @Headers("X-API-Key: test")
-    suspend fun getGastos(@Query("idGasto") idGasto: Int?): List<GastosDto>
+    suspend fun getGastos():List<GastosDto>
 
-    @GET("api/gastos/{id}")
+    @GET("api/Gastos/{id}")
     @Headers("X-API-Key: test")
     suspend fun getGastoById(id: Int): GastosDto
 
-    @POST("api/gastos")
+    @POST("api/Gastos")
     @Headers("X-API-Key: test")
     suspend fun addGasto(@Body gastos: GastosDto): Response<GastosDto>
 }

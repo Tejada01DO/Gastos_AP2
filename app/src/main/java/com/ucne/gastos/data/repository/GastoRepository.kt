@@ -1,5 +1,7 @@
 package com.ucne.gastos.data.repository
 
+import android.os.Build
+import androidx.annotation.RequiresExtension
 import com.ucne.gastos.data.remote.GastosApi
 import com.ucne.gastos.data.remote.dto.GastosDto
 import com.ucne.gastos.util.Resource
@@ -12,11 +14,12 @@ import javax.inject.Inject
 class GastoRepository @Inject constructor(
     private val gastosApi: GastosApi,
 ){
-    fun getGastos(selectedUser: Int?): Flow<Resource<List<GastosDto>>> = flow {
+    @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
+    fun getGastos(): Flow<Resource<List<GastosDto>>> = flow {
         try {
             emit(Resource.Loading())
 
-            val gastos = gastosApi.getGastos(selectedUser)
+            val gastos = gastosApi.getGastos()
 
             emit(Resource.Success(gastos))
 
@@ -27,13 +30,9 @@ class GastoRepository @Inject constructor(
             //debe verificar tu conexion a internet
             emit(Resource.Error(e.message ?: "verificar tu conexion a internet"))
         }
-        catch (e: Exception) {
-            //debe verificar tu conexion a internet
-            emit(Resource.Error(e.message ?: "verificar tu conexion a internet"))
-        }
     }
 
-    fun getTicketById(gastoId: Int): Flow<Resource<GastosDto>> = flow {
+    fun getGastoById(gastoId: Int): Flow<Resource<GastosDto>> = flow {
         try {
             emit(Resource.Loading())
 
