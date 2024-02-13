@@ -16,7 +16,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.ucne.gastos.ui.gastos.GastosScreen
 import com.ucne.gastos.ui.home.Home
 import com.ucne.gastos.ui.navigation.Nav
 import com.ucne.gastos.ui.theme.GastosTheme

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ucne.gastos.data.remote.dto.GastosDto
 import com.ucne.gastos.data.repository.GastoRepository
+import com.ucne.gastos.ui.gastos.GastosListState
 import com.ucne.gastos.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +18,7 @@ import javax.inject.Inject
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class C_Gastos_ViewModel @Inject constructor(
     private val gastosRepository: GastoRepository
 
 ) : ViewModel() {
@@ -61,11 +62,4 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
-
 }
-
-data class GastosListState(
-    val isLoading: Boolean = false,
-    val gastos: List<GastosDto>? = emptyList(),
-    val error: String? = null,
-)

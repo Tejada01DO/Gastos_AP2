@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -57,18 +58,24 @@ fun C_Gastos(viewModel: HomeViewModel = hiltViewModel()){
                     .padding(0.dp, 50.dp), strokeWidth = 8.dp)
         }
 
-        Column (
+        LazyColumn (
             Modifier.fillMaxSize()
         ){
-            Spacer(modifier = Modifier.padding(0.dp, 50.dp))
+            item {
+                Spacer(modifier = Modifier.padding(0.dp, 10.dp))
+            }
             uiState.gastos?.forEach { gastos ->
-                ListGastos(gastos = gastos)
+                item {
+                    ListGastos(gastos = gastos)
+                }
+            }
+            item {
+                if(showModal){
+                    DetailModal(gastos = selectedGastos)
+                }
             }
         }
 
-        if(showModal){
-            DetailModal(gastos = selectedGastos)
-        }
     }
 }
 
@@ -120,12 +127,13 @@ fun DetailModal(gastos: GastosDto){
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp)
+                .height(330.dp)
                 .padding(10.dp, 0.dp)
 
         ){
             Column(
                 modifier = Modifier.fillMaxSize()
+                    .padding(10.dp, 10.dp)
             ) {
                 Row(
                     modifier = Modifier

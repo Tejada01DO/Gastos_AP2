@@ -49,4 +49,34 @@ class GastoRepository @Inject constructor(
             emit(Resource.Error(e.message ?: "verificar tu conexion a internet"))
         }
     }
+
+    fun postGastos(gastosDto: GastosDto): Flow<Resource<GastosDto>> = flow{
+        try {
+            emit(Resource.Loading())
+
+            val response = gastosApi.addGasto(gastosDto)
+
+            if (response.isSuccessful) {
+                val responseBody = response.body()
+                if (responseBody != null) {
+                    emit(Resource.Success(responseBody))
+                    emit(Resource.Error("Se guardo correctamente"))
+                } else {
+                    emit(Resource.Error("Respuesta vacía del servidor"))
+                }
+            } else {
+                emit(Resource.Error("Error en la solicitud: ${response.code()} ${response.message()}"))
+            }
+        } catch (e: HttpException) {
+            //error general HTTP
+            emit(Resource.Error(e.message ?: "Error HTTP GENERAL"))
+        } catch (e: IOException) {
+            //debe verificar tu conexion a internet
+            emit(Resource.Error(e.message ?: "verificar tu conexion a internet"))
+        }
+        catch (e: Exception) {
+            //debe verificar tu conexion a internet
+            emit(Resource.Error(e.message ?: "verificar tu conexion a internet"))
+        }
+    }
 }
