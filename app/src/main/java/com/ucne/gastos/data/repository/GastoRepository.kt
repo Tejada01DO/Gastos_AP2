@@ -28,7 +28,7 @@ class GastoRepository @Inject constructor(
             emit(Resource.Error(e.message ?: "Error HTTP GENERAL"))
         } catch (e: IOException) {
             //debe verificar tu conexion a internet
-            emit(Resource.Error(e.message ?: "verificar tu conexion a internet"))
+            emit(Resource.Error(e.message ?: "Verificar tu conexion a internet"))
         }
     }
 
@@ -43,10 +43,7 @@ class GastoRepository @Inject constructor(
         } catch (e: HttpException) {
             emit(Resource.Error(e.message ?: "Error HTTP GENERAL"))
         } catch (e: IOException) {
-            emit(Resource.Error(e.message ?: "verificar tu conexion a internet"))
-        }
-        catch (e: Exception) {
-            emit(Resource.Error(e.message ?: "verificar tu conexion a internet"))
+            emit(Resource.Error(e.message ?: "Verificar tu conexion a internet"))
         }
     }
 
@@ -56,27 +53,16 @@ class GastoRepository @Inject constructor(
 
             val response = gastosApi.addGasto(gastosDto)
 
-            if (response.isSuccessful) {
-                val responseBody = response.body()
-                if (responseBody != null) {
-                    emit(Resource.Success(responseBody))
-                    emit(Resource.Error("Se guardo correctamente"))
-                } else {
-                    emit(Resource.Error("Respuesta vacía del servidor"))
-                }
-            } else {
-                emit(Resource.Error("Error en la solicitud: ${response.code()} ${response.message()}"))
-            }
         } catch (e: HttpException) {
             //error general HTTP
             emit(Resource.Error(e.message ?: "Error HTTP GENERAL"))
         } catch (e: IOException) {
             //debe verificar tu conexion a internet
-            emit(Resource.Error(e.message ?: "verificar tu conexion a internet"))
+            emit(Resource.Error(e.message ?: "Verificar tu conexion a internet"))
         }
         catch (e: Exception) {
             //debe verificar tu conexion a internet
-            emit(Resource.Error(e.message ?: "verificar tu conexion a internet"))
+            emit(Resource.Error(e.message ?: "Verificar tu conexion a internet"))
         }
     }
 }

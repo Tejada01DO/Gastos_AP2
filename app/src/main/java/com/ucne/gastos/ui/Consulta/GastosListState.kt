@@ -1,4 +1,4 @@
-package com.ucne.gastos.ui.gastos
+package com.ucne.gastos.ui.Consulta
 
 import com.ucne.gastos.data.remote.dto.GastosDto
 

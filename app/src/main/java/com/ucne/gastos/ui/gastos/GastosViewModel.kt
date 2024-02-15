@@ -18,32 +18,23 @@ class GastosViewModel @Inject constructor(
     private val gastosRepository: GastoRepository
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(GastosListState())
+    private val _state = MutableStateFlow(GastoState())
     val state = _state.asStateFlow()
 
-    fun postGastos(gastosDto: GastosDto) {
+    fun postGastos() {
         viewModelScope.launch {
-            gastosRepository.postGastos(gastosDto).collectLatest  { result ->
-                when (result) {
+            gastosRepository.postGastos(_state.value.gasto).collectLatest { result ->
+                when(result){
                     is Resource.Loading -> {
                         _state.update { it.copy(isLoading = true) }
                     }
 
                     is Resource.Success -> {
-                        _state.update { it.copy(gasto = GastosDto(
-                            0,
-                            "",
-                            0,
-                            "",
-                            "",
-                            "",
-                            0,
-                            0,
-                            0
-                        ),
-                            isLoading = false,
-                            error = result.message
-                        )
+                        _state.update {
+                            it.copy(
+                                successMessage = "Guardado correctamente",
+                                isLoading = false
+                            )
                         }
                     }
 
@@ -51,17 +42,6 @@ class GastosViewModel @Inject constructor(
                         _state.update {
                             it.copy(
                                 error = result.message,
-                                gasto =   GastosDto(
-                                    0,
-                                    "",
-                                    0,
-                                    "",
-                                    "",
-                                    "",
-                                    0,
-                                    0,
-                                    0
-                                ),
                                 isLoading = false
                             )
                         }
@@ -70,4 +50,96 @@ class GastosViewModel @Inject constructor(
             }
         }
     }
+
+    fun onEvent(event: GastosEvent){
+        when(event){
+            is GastosEvent.FechaChanged -> {
+                _state.update{
+                    it.copy(
+                        gasto = it.gasto.copy(fecha = event.fecha)
+                    )
+                }
+            }
+
+            is GastosEvent.IdSuplidorChanged -> {
+                _state.update{
+                    it.copy(
+                        gasto = it.gasto.copy(idSuplidor = event.idSuplidor.toInt())
+                    )
+                }
+            }
+
+            is GastosEvent.NcfChanged -> {
+                _state.update{
+                    it.copy(
+                        gasto = it.gasto.copy(ncf = event.ncf)
+                    )
+                }
+            }
+
+            is GastosEvent.ConceptoChanged -> {
+                _state.update{
+                    it.copy(
+                        gasto = it.gasto.copy(concepto = event.concepto)
+                    )
+                }
+            }
+
+            is GastosEvent.DescuentoChanged -> {
+                _state.update{
+                    it.copy(
+                        gasto = it.gasto.copy(descuento = event.descuento.toInt())
+                    )
+                }
+            }
+
+            is GastosEvent.ItbisChanged -> {
+                _state.update{
+                    it.copy(
+                        gasto = it.gasto.copy(itbis = event.itbis.toInt())
+                    )
+                }
+            }
+
+            is GastosEvent.MontoChanged -> {
+                _state.update{
+                    it.copy(
+                        gasto = it.gasto.copy(monto = event.monto.toInt())
+                    )
+                }
+            }
+
+            GastosEvent.onSave -> {
+                postGastos()
+            }
+
+            GastosEvent.onLimpiar -> {
+                _state.update{
+                    it.copy(
+                        gasto = GastosDto()
+                    )
+                }
+            }
+
+        }
+    }
+}
+
+data class GastoState(
+    val isLoading: Boolean = false,
+    val error: String? = null,
+    val successMessage: String? = null,
+    val gasto: GastosDto = GastosDto()
+)
+
+sealed class GastosEvent{
+    data class FechaChanged(val fecha: String): GastosEvent()
+    data class IdSuplidorChanged(val idSuplidor: String): GastosEvent()
+    data class NcfChanged(val ncf: String): GastosEvent()
+    data class ConceptoChanged(val concepto: String): GastosEvent()
+    data class DescuentoChanged(val descuento: String): GastosEvent()
+    data class ItbisChanged(val itbis: String): GastosEvent()
+    data class MontoChanged(val monto: String): GastosEvent()
+    object onSave: GastosEvent()
+    object onLimpiar: GastosEvent()
 }

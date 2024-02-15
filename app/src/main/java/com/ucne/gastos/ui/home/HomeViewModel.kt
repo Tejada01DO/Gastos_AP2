@@ -4,9 +4,8 @@ import android.os.Build
 import androidx.annotation.RequiresExtension
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ucne.gastos.data.remote.dto.GastosDto
 import com.ucne.gastos.data.repository.GastoRepository
-import com.ucne.gastos.ui.gastos.GastosListState
+import com.ucne.gastos.ui.Consulta.GastosListState
 import com.ucne.gastos.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
