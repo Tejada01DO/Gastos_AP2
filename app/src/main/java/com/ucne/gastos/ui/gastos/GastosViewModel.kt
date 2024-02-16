@@ -41,7 +41,7 @@ class GastosViewModel @Inject constructor(
                     is Resource.Error -> {
                         _state.update {
                             it.copy(
-                                error = result.message,
+                                error = "Ocurrio un error, intentelo de nuevo",
                                 isLoading = false
                             )
                         }
@@ -64,7 +64,7 @@ class GastosViewModel @Inject constructor(
             is GastosEvent.IdSuplidorChanged -> {
                 _state.update{
                     it.copy(
-                        gasto = it.gasto.copy(idSuplidor = event.idSuplidor.toInt())
+                        gasto = it.gasto.copy(idSuplidor = event.idSuplidor.toIntOrNull()?:0)
                     )
                 }
             }
@@ -88,7 +88,7 @@ class GastosViewModel @Inject constructor(
             is GastosEvent.DescuentoChanged -> {
                 _state.update{
                     it.copy(
-                        gasto = it.gasto.copy(descuento = event.descuento.toInt())
+                        gasto = it.gasto.copy(descuento = event.descuento.toIntOrNull()?:0)
                     )
                 }
             }
@@ -96,7 +96,7 @@ class GastosViewModel @Inject constructor(
             is GastosEvent.ItbisChanged -> {
                 _state.update{
                     it.copy(
-                        gasto = it.gasto.copy(itbis = event.itbis.toInt())
+                        gasto = it.gasto.copy(itbis = event.itbis.toIntOrNull()?:0)
                     )
                 }
             }
@@ -104,7 +104,7 @@ class GastosViewModel @Inject constructor(
             is GastosEvent.MontoChanged -> {
                 _state.update{
                     it.copy(
-                        gasto = it.gasto.copy(monto = event.monto.toInt())
+                        gasto = it.gasto.copy(monto = event.monto.toIntOrNull()?:0)
                     )
                 }
             }

@@ -60,6 +60,10 @@ fun GastosScreen(
                 Text(text = it)
             }
 
+            state.error?.let{
+                Text(text = it)
+            }
+
             OutlinedTextField(
                 value = gasto.fecha,
                 onValueChange = { viewModel.onEvent(GastosEvent.FechaChanged(it)) },
@@ -75,7 +79,7 @@ fun GastosScreen(
                 label = { Text(text = "Suplidor ID: ") },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(5.dp)
+                    .padding(5.dp),
             )
 
             OutlinedTextField(

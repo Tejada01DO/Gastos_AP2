@@ -5,7 +5,6 @@ import com.ucne.gastos.data.remote.dto.SuplidorDto
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.Response
 import retrofit2.http.Headers
 
 interface GastosApi {
@@ -19,7 +18,7 @@ interface GastosApi {
 
     @POST("api/Gastos")
     @Headers("X-API-Key: test")
-    suspend fun addGasto(@Body gastos: GastosDto): GastosDto
+    suspend fun postGastos(@Body gastos: GastosDto): GastosDto
 
     @GET("api/SuplidoresGastos")
     @Headers("X-API-Key: test")

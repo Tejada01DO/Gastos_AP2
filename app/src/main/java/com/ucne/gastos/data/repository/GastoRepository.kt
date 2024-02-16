@@ -51,7 +51,8 @@ class GastoRepository @Inject constructor(
         try {
             emit(Resource.Loading())
 
-            val response = gastosApi.addGasto(gastosDto)
+            gastosApi.postGastos(gastosDto)
+            emit(Resource.Success(gastosDto))
 
         } catch (e: HttpException) {
             //error general HTTP
