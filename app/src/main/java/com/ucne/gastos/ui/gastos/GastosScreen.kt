@@ -153,7 +153,7 @@ fun GastosScreen(
 
                 Button(
                     onClick = {
-                       viewModel.onEvent(GastosEvent.onLimpiar)
+                        viewModel.onEvent(GastosEvent.onLimpiar)
                     },
                     modifier = Modifier
                         .weight(1f)

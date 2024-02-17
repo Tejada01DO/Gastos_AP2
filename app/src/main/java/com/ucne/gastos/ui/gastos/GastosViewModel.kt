@@ -1,5 +1,6 @@
 package com.ucne.gastos.ui.gastos
 
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ucne.gastos.data.remote.dto.GastosDto
@@ -111,12 +112,16 @@ class GastosViewModel @Inject constructor(
 
             GastosEvent.onSave -> {
                 postGastos()
+                onEvent(GastosEvent.onLimpiar)
             }
 
             GastosEvent.onLimpiar -> {
                 _state.update{
                     it.copy(
-                        gasto = GastosDto()
+                        gasto = GastosDto(),
+                        successMessage = null,
+                        error = null,
+                        isLoading = false
                     )
                 }
             }
